@@ -1,6 +1,10 @@
+package alquileres.entity;
+
+import alquileres.entity.GeoLoc;
+
 import java.time.LocalDateTime;
 
-public class Propiedades {
+public class Propiedad {
     private Tipo tipo;
     private GeoLoc geoLoc;
     private String servicios;
@@ -9,7 +13,7 @@ public class Propiedades {
     private LocalDateTime horarioSalida;
     private Integer precio;
 
-    public Propiedades(Tipo tipo, GeoLoc geoLoc, String servicios, Integer capacidad, LocalDateTime horarioEntrada, LocalDateTime horarioSalida, Integer precio) {
+    public Propiedad(Tipo tipo, GeoLoc geoLoc, String servicios, Integer capacidad, LocalDateTime horarioEntrada, LocalDateTime horarioSalida, Integer precio) {
         this.tipo = tipo;
         this.geoLoc = geoLoc;
         this.servicios = servicios;

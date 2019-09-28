@@ -1,3 +1,5 @@
+package alquileres.entity;
+
 public class GeoLoc {
     private String pais;
     private String ciudad;
@@ -5,7 +7,7 @@ public class GeoLoc {
 
     @Override
     public String toString() {
-        return "GeoLoc{" +
+        return "alquileres.entity.GeoLoc{" +
                 "pais='" + pais + '\'' +
                 ", ciudad='" + ciudad + '\'' +
                 ", direccion='" + direccion + '\'' +

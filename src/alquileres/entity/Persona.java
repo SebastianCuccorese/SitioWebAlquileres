@@ -1,9 +1,11 @@
-public class Personas {
+package alquileres.entity;
+
+public class Persona {
     private String nombre;
     private String mail;
     private Integer telefono;
 
-    public Personas(String nombre, String mail, Integer telefono) {
+    public Persona(String nombre, String mail, Integer telefono) {
         this.nombre = nombre;
         this.mail = mail;
         this.telefono = telefono;

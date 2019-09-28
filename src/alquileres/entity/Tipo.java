@@ -1,3 +1,5 @@
+package alquileres.entity;
+
 public class Tipo {
     private String tipo;
 
