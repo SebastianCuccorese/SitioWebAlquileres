@@ -1,11 +1,10 @@
 package alquileres.entity;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Inquilino extends Persona {
+public class Inquilino extends Usuario {
 
     private List<Reserva> todasLasReservas = new ArrayList<>(); //reservas concretadas
 

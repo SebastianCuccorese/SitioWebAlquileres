@@ -1,12 +1,10 @@
 package alquileres.entity;
-
-import alquileres.entity.Persona;
 import alquileres.entity.Propiedad;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Propietario extends Persona {
+public class Propietario extends Usuario {
     private List<Propiedad> listaPropiedades = new ArrayList<>();
 
     public Propietario(String nombre, String mail, Integer telefono) {
