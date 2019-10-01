@@ -1,6 +1,3 @@
-package alquileres.entity;
-import alquileres.entity.Propiedad;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +11,7 @@ public class Propietario extends Usuario {
     protected void ponerPropiedadEnAlquiler(Propiedad propiedad) {
             listaPropiedades.add(propiedad);
     }
-    protected List getListaPropiedades() {
+    protected List<Propiedad> getListaPropiedades() {
         return listaPropiedades;
     }
 

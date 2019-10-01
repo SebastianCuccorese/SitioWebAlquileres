@@ -1,5 +1,3 @@
-package alquileres.entity;
-
 abstract public class Usuario {
     private String nombre;
     private String mail;

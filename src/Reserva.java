@@ -1,8 +1,3 @@
-package alquileres.entity;
-
-import alquileres.entity.Inquilino;
-import alquileres.entity.Propiedad;
-
 import java.time.LocalDate;
 
 public class Reserva {

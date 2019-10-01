@@ -1,6 +1,3 @@
-package alquileres.entity;
-
-
 import java.time.LocalDateTime;
 
 public class Propiedad {
@@ -26,7 +23,7 @@ public class Propiedad {
         return tipo;
     }
 
-    public String getCiudad() {
+    protected String getCiudad() {
         return ciudad;
     }
 

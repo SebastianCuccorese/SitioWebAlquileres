@@ -1,5 +1,3 @@
-package alquileres.entity;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +6,6 @@ import java.util.stream.Collectors;
 public class Sitio {
     private List<Propietario> listaPropietarios = new ArrayList<>();
     private List<Inquilino>  listaInquilinos = new ArrayList<>();
-
     public List<Propietario> getListaPropietarios() {
         return listaPropietarios;
     }
@@ -23,7 +20,7 @@ public class Sitio {
     public List<Propiedad> buscarPropiedad(String ciudad, LocalDateTime horarioCheckIn, LocalDateTime horarioCheckOut, Integer cantHuespedes, Integer precioMin, Integer precioMax) {
         List<Propiedad>  listaPropiedadesAdecuadas = new ArrayList<>();
         for(Propietario propietario : listaPropietarios) {
-            listaPropiedadesAdecuadas.addAll((propietario.getListaPropiedades().stream().filter(propiedades -> propiedades.getCiudad().equals(ciudad))).collect(Collectors.toList()));
+            listaPropiedadesAdecuadas.addAll((propietario.getListaPropiedades().stream().filter(propiedad -> propiedad.getCiudad().equals(ciudad))).collect(Collectors.toList()));
             listaPropiedadesAdecuadas.addAll((propietario.getListaPropiedades().stream().filter(propiedades -> propiedades.getHorarioEntrada() == horarioCheckIn)).collect(Collectors.toList()));
             listaPropiedadesAdecuadas.addAll((propietario.getListaPropiedades().stream().filter(propiedades -> propiedades.getHorarioSalida() == horarioCheckOut)).collect(Collectors.toList()));
             listaPropiedadesAdecuadas.addAll((propietario.getListaPropiedades().stream().filter(propiedades -> propiedades.getCapacidad() == cantHuespedes)).collect(Collectors.toList()));
