@@ -8,8 +8,9 @@ public class Propiedad {
     private LocalDateTime horarioEntrada;
     private LocalDateTime horarioSalida;
     private Integer precio;
+    private Propietario propietario;
 
-    public Propiedad(String tipo, String ciudad, String servicios, Integer capacidad, LocalDateTime horarioEntrada, LocalDateTime horarioSalida, Integer precio) {
+    public Propiedad(String tipo, String ciudad, String servicios, Integer capacidad, LocalDateTime horarioEntrada, LocalDateTime horarioSalida, Integer precio, Propietario propietario) {
         this.tipo = tipo;
         this.ciudad = ciudad;
         this.servicios = servicios;
@@ -17,6 +18,7 @@ public class Propiedad {
         this.horarioEntrada = horarioEntrada;
         this.horarioSalida = horarioSalida;
         this.precio = precio;
+        this.propietario = propietario;
     }
 
     public String  getTipo() {
@@ -45,5 +47,9 @@ public class Propiedad {
 
     public Integer getPrecio() {
         return precio;
+    }
+
+    public Propietario getPropietario() {
+        return propietario;
     }
 }
