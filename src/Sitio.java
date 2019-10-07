@@ -14,7 +14,11 @@ public class Sitio {
     }
 
     private boolean existeReservaDePropiedad(Propiedad unaPropiedad) {
-        return this.getListaDeReservas().stream().anyMatch(r-> r.getPropiedad() == unaPropiedad);
+        return this.getListaDeReservas().stream().anyMatch(r-> r.getPropiedad().equals(unaPropiedad));
+    }
+
+    public void aceptarReserva(Reserva reserva) {
+        listaDeReservas.add(reserva); //Considero que si el sitio la acepta, es porque el propietario lo hace.
     }
 
     //valores default para parametros de busqueda no obligatorios
@@ -32,11 +36,14 @@ public class Sitio {
         else return 0;
     }
 
-    private Integer defaultPrecioMax(Integer precioMax){
+    private double defaultPrecioMax(Integer precioMax){
+        double pInfiniteDouble = Double.POSITIVE_INFINITY;
         if (precioMax != null){
             return precioMax;
         }
-        else return 2000000000;  //buscar si hay definicion de infinito, esto es medio caca
+        else return pInfiniteDouble;  //buscar si hay definicion de infinito, esto es medio caca
+        //Listo, ya es infinito. Teoricamente :)
+
     }
 
     /*Bueno con esto creo que no hay problemas de repetidos, no me convence lo de los valores default para los parametros opcionales.
