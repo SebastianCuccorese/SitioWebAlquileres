@@ -1,3 +1,5 @@
+package alquileres.web;
+
 import java.time.LocalTime;
 
 public class Propiedad {
@@ -25,7 +27,7 @@ public class Propiedad {
         return tipo;
     }
 
-    protected String getCiudad() {
+    public String getCiudad() {
         return ciudad;
     }
 

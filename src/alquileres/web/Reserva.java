@@ -1,3 +1,5 @@
+package alquileres.web;
+
 import java.time.LocalDate;
 
 public class Reserva {

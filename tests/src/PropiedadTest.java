@@ -1,3 +1,6 @@
+import alquileres.web.Propiedad;
+import alquileres.web.Propietario;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 
 import java.time.LocalTime;
@@ -20,41 +23,41 @@ class PropiedadTest {
 
     @org.junit.jupiter.api.Test
     void getTipo() {
-        assertEquals(depto.getTipo(), "Departamento");
+        Assertions.assertEquals(depto.getTipo(), "Departamento");
     }
 
     @org.junit.jupiter.api.Test
     void getCiudad() {
-        assertEquals(depto.getCiudad(), "Mar del Plata");
+        Assertions.assertEquals(depto.getCiudad(), "Mar del Plata");
     }
 
     @org.junit.jupiter.api.Test
     void getServicios() {
-        assertEquals(casa.getServicios(), "Agua, Luz, Gas, Internet");
+        Assertions.assertEquals(casa.getServicios(), "Agua, Luz, Gas, Internet");
     }
 
     @org.junit.jupiter.api.Test
     void getCapacidad() {
-        assertEquals(casa.getCapacidad(), 6);
+        Assertions.assertEquals(casa.getCapacidad(), 6);
     }
 
     @org.junit.jupiter.api.Test
     void getHorarioEntrada() {
-        assertEquals(depto.getHorarioEntrada(),LocalTime.of(7, 20));
+        Assertions.assertEquals(depto.getHorarioEntrada(),LocalTime.of(7, 20));
     }
 
     @org.junit.jupiter.api.Test
     void getHorarioSalida() {
-        assertEquals(casa.getHorarioSalida(), LocalTime.of(22, 30));
+        Assertions.assertEquals(casa.getHorarioSalida(), LocalTime.of(22, 30));
     }
 
     @org.junit.jupiter.api.Test
     void getPrecio() {
-        assertEquals(casa.getPrecio(), 2000);
+        Assertions.assertEquals(casa.getPrecio(), 2000);
     }
 
     @org.junit.jupiter.api.Test
     void getPropietario() {
-        assertEquals(depto.getPropietario(), juan);
+        Assertions.assertEquals(depto.getPropietario(), juan);
     }
 }

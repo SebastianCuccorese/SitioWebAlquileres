@@ -1,3 +1,5 @@
+package alquileres.web;
+
 abstract public class Usuario {
     private String nombre;
     private String mail;

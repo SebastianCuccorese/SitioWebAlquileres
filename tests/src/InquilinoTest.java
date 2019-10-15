@@ -1,5 +1,10 @@
+import alquileres.web.Inquilino;
+import alquileres.web.Propiedad;
+import alquileres.web.Propietario;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -15,21 +20,21 @@ class InquilinoTest {
     @BeforeEach
     void setUp() {
         tomas = new Inquilino("Tomas", "Tomas@Hotmail.com", 30980092);
-        juan = mock(Propietario.class);
+        juan = Mockito.mock(Propietario.class);
         depto =new Propiedad("Departamento", "Mar del Plata", "Agua, Luz, Gas, Internet", 2, LocalTime.of(7,20), LocalTime.of(22,30), 500, juan);
-        casa = mock(Propiedad.class);
+        casa = Mockito.mock(Propiedad.class);
     }
 
     @Test
     void hacerReserva() {
         tomas.hacerReserva(depto, LocalDate.of(2009, 10, 23), LocalDate.of(2009, 10, 25));
-        assertEquals(tomas.getTodasLasReservas().get(0).getPropiedad(), depto);
+        Assertions.assertEquals(tomas.getTodasLasReservas().get(0).getPropiedad(), depto);
     }
 
     @Test
     void getTodasLasReservas() {
         tomas.hacerReserva(depto, LocalDate.of(2009, 10, 23), LocalDate.of(2009, 10, 25));
         tomas.hacerReserva(casa, LocalDate.of(2009, 10, 23), LocalDate.of(2009, 10, 25));
-        assertEquals(tomas.getTodasLasReservas().size(), 2);
+        Assertions.assertEquals(tomas.getTodasLasReservas().size(), 2);
     }
 }
