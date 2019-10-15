@@ -1,16 +1,16 @@
-import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 public class Propiedad {
     private String tipo;
     private String ciudad;
     private String servicios;
     private Integer capacidad;
-    private LocalDateTime horarioEntrada;
-    private LocalDateTime horarioSalida;
+    private LocalTime horarioEntrada;
+    private LocalTime horarioSalida;
     private Integer precio;
     private Propietario propietario;
 
-    public Propiedad(String tipo, String ciudad, String servicios, Integer capacidad, LocalDateTime horarioEntrada, LocalDateTime horarioSalida, Integer precio, Propietario propietario) {
+    public Propiedad(String tipo, String ciudad, String servicios, Integer capacidad, LocalTime horarioEntrada, LocalTime horarioSalida, Integer precio, Propietario propietario) {
         this.tipo = tipo;
         this.ciudad = ciudad;
         this.servicios = servicios;
@@ -37,11 +37,11 @@ public class Propiedad {
         return capacidad;
     }
 
-    public LocalDateTime getHorarioEntrada() {
+    public LocalTime getHorarioEntrada() {
         return horarioEntrada;
     }
 
-    public LocalDateTime getHorarioSalida() {
+    public LocalTime getHorarioSalida() {
         return horarioSalida;
     }
 

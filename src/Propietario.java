@@ -7,4 +7,8 @@ public class Propietario extends Usuario {
         super(nombre, mail, telefono);
     }
 
+    public void aceptarReserva(Reserva reserva) {
+
+    }
+    // Tenemos que darle alguna funcionalidad a esto, si no esta al pedo
 }
