@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement />
+  <nodes>
+    <node x="234.63862433862442" y="0.0">Usuario</node>
+    <node x="259.6386243386245" y="668.0">Reserva</node>
+    <node x="197.97328042328056" y="902.0">Sitio</node>
+    <node x="141.67050264550272" y="167.0">Propietario</node>
+    <node x="341.13862433862437" y="522.0">Inquilino</node>
+    <node x="0.0" y="267.0">Propiedad</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="Propietario" target="Usuario">
+      <point x="56.75000000000003" y="-25.0" />
+      <point x="311.9205026455028" y="147.0" />
+      <point x="313.0136243386244" y="147.0" />
+      <point x="-26.125" y="58.5" />
+    </edge>
+    <edge source="Inquilino" target="Propiedad">
+      <point x="-112.33333333333331" y="-48.0" />
+      <point x="397.3052910052911" y="502.0" />
+      <point x="483.29999999999995" y="502.0" />
+      <point x="214.79999999999995" y="102.5" />
+    </edge>
+    <edge source="Inquilino" target="Usuario">
+      <point x="0.0" y="-48.0" />
+      <point x="509.63862433862437" y="502.0" />
+      <point x="553.6666666666667" y="502.0" />
+      <point x="553.6666666666667" y="147.0" />
+      <point x="365.2636243386244" y="147.0" />
+      <point x="26.125" y="58.5" />
+    </edge>
+    <edge source="Sitio" target="Propiedad">
+      <point x="-212.91666666666669" y="-69.5" />
+      <point x="240.55661375661387" y="882.0" />
+      <point x="204.42857142857156" y="882.0" />
+      <point x="204.42857142857156" y="502.0" />
+      <point x="53.69999999999999" y="502.0" />
+      <point x="-214.8" y="102.5" />
+    </edge>
+    <edge source="Reserva" target="Inquilino">
+      <point x="-5.6843418860808015E-14" y="-92.0" />
+      <point x="420.13862433862437" y="648.0" />
+      <point x="413.35291005291003" y="648.0" />
+      <point x="-96.28571428571433" y="48.0" />
+    </edge>
+    <edge source="Sitio" target="Reserva">
+      <point x="-42.583333333333314" y="-69.5" />
+      <point x="410.8899470899472" y="882.0" />
+      <point x="339.8886243386245" y="882.0" />
+      <point x="-80.25" y="92.0" />
+    </edge>
+    <edge source="Inquilino" target="Reserva">
+      <point x="48.14285714285711" y="48.0" />
+      <point x="137.5714285714285" y="-92.0" />
+    </edge>
+    <edge source="Reserva" target="Propiedad">
+      <point x="-91.71428571428584" y="-92.0" />
+      <point x="328.4243386243386" y="638.0" />
+      <point x="279.5" y="638.0" />
+      <point x="279.5" y="502.0" />
+      <point x="375.9" y="502.0" />
+      <point x="107.39999999999998" y="102.5" />
+    </edge>
+    <edge source="Sitio" target="Inquilino">
+      <point x="212.91666666666677" y="-69.5" />
+      <point x="666.3899470899473" y="882.0" />
+      <point x="602.1386243386245" y="882.0" />
+      <point x="602.1386243386245" y="648.0" />
+      <point x="654.0671957671958" y="648.0" />
+      <point x="144.42857142857142" y="48.0" />
+    </edge>
+    <edge source="Propiedad" target="Propietario">
+      <point x="-134.25" y="-102.5" />
+      <point x="134.25" y="242.0" />
+      <point x="198.42050264550272" y="242.0" />
+      <point x="-56.75" y="25.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.4669926650366748" x="354.5" y="593.5" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Properties</Category>
+    <Category>Methods</Category>
+    <Category>Inner Classes</Category>
+    <Category>Constructors</Category>
+    <Category>Fields</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>packageLocal</VISIBILITY>
+</Diagram>
+
