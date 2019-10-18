@@ -18,8 +18,18 @@ public class Sitio {
         return this.getListaDeReservas().stream().anyMatch(r-> r.getPropiedad().equals(unaPropiedad));
     }
 
-    public void aceptarReserva(Reserva reserva) {
-        listaDeReservas.add(reserva); //Considero que si el sitio la acepta, es porque el propietario lo hace.
+    public void aceptarReserva(Reserva reserva) throws Exception {
+       if (reserva.getPropiedad().getPropietario().aceptarReserva(reserva)) {
+            reserva.getInquilino().agendarReserva(reserva);
+            listaDeReservas.add(reserva);
+       }
+       else {
+           throw new Exception("Su reserva ha sido rechazada");
+       }
+    }
+    public Reserva crearReserva(Inquilino inquilino, Propiedad propiedad, LocalDate fechaDeIngreso, LocalDate fechaDeSalida) {
+        Reserva newReserva = new Reserva(inquilino, propiedad, fechaDeIngreso, fechaDeSalida); // aun no fue aceptada por propietario
+        return newReserva;
     }
 
     //valores default para parametros de busqueda no obligatorios

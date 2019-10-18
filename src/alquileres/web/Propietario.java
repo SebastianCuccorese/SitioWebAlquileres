@@ -5,12 +5,15 @@ import java.util.List;
 
 public class Propietario extends Usuario {
 
+
     public Propietario(String nombre, String mail, Integer telefono) {
         super(nombre, mail, telefono);
     }
 
-    public void aceptarReserva(Reserva reserva) {
-
+    public boolean aceptarReserva(Reserva reserva) {
+      // if (reserva.getInquilino().getRanking() > 3) {
+           return true;
+      // }
+        //Por ahora solo retorna true, pero la idea seria darle alguna condicion por la cual acepte. Es lo que se me ocurrio.
     }
-    // Tenemos que darle alguna funcionalidad a esto, si no esta al pedo
 }
