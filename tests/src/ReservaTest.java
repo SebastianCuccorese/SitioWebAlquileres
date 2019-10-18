@@ -1,6 +1,7 @@
 import alquileres.web.Inquilino;
 import alquileres.web.Propiedad;
 import alquileres.web.Propietario;
+import alquileres.web.Reserva;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -18,7 +19,7 @@ class ReservaTest {
     void setUp() {
         tomas = new Inquilino("Tomas", "Tomas@Hotmail.com", 30980092);
         depto = new Propiedad("Departamento", "Mar del Plata", "Agua, Luz, Gas, Internet", 2, LocalTime.of(7,20), LocalTime.of(22,30), 500, juan);
-        tomas.hacerReserva(depto, LocalDate.of(2019, 11, 23), LocalDate.of(2019, 11, 30));
+        tomas.agendarReserva(new Reserva(tomas, depto, LocalDate.of(2019, 11, 23), LocalDate.of(2019, 11, 30)));
     }
 
     @Test

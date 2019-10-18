@@ -1,6 +1,7 @@
 import alquileres.web.Inquilino;
 import alquileres.web.Propiedad;
 import alquileres.web.Propietario;
+import alquileres.web.Reserva;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -26,15 +27,15 @@ class InquilinoTest {
     }
 
     @Test
-    void hacerReserva() {
-        tomas.hacerReserva(depto, LocalDate.of(2009, 10, 23), LocalDate.of(2009, 10, 25));
+    void agendarReserva() {
+        tomas.agendarReserva(new Reserva(tomas, depto, LocalDate.of(2009, 10, 23), LocalDate.of(2009, 10, 25)));
         Assertions.assertEquals(tomas.getTodasLasReservas().get(0).getPropiedad(), depto);
     }
 
     @Test
     void getTodasLasReservas() {
-        tomas.hacerReserva(depto, LocalDate.of(2009, 10, 23), LocalDate.of(2009, 10, 25));
-        tomas.hacerReserva(casa, LocalDate.of(2009, 10, 23), LocalDate.of(2009, 10, 25));
+        tomas.agendarReserva(new Reserva(tomas, depto, LocalDate.of(2009, 10, 23), LocalDate.of(2009, 10, 25)));
+        tomas.agendarReserva(new Reserva(tomas, casa, LocalDate.of(2009, 10, 23), LocalDate.of(2009, 10, 25)));
         Assertions.assertEquals(tomas.getTodasLasReservas().size(), 2);
     }
 }

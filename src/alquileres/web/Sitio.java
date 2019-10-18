@@ -18,8 +18,9 @@ public class Sitio {
         return this.getListaDeReservas().stream().anyMatch(r-> r.getPropiedad().equals(unaPropiedad));
     }
 
-    public void aceptarReserva(Reserva reserva) throws Exception {
-       if (reserva.getPropiedad().getPropietario().aceptarReserva(reserva)) {
+    public void aceptarYCrearReserva(Inquilino inquilino, Propiedad propiedad, LocalDate fechaDeIngreso, LocalDate fechaDeSalida) throws Exception {
+        Reserva reserva = crearReserva(inquilino, propiedad, fechaDeIngreso, fechaDeSalida);
+       if (reserva.getPropiedad().getPropietario().aceptarReserva(reserva) && hayDisponibilidad(reserva.getPropiedad(), reserva.getFechaDeIngreso(), reserva.getFechaDeSalida())) {
             reserva.getInquilino().agendarReserva(reserva);
             listaDeReservas.add(reserva);
        }
@@ -27,7 +28,7 @@ public class Sitio {
            throw new Exception("Su reserva ha sido rechazada");
        }
     }
-    public Reserva crearReserva(Inquilino inquilino, Propiedad propiedad, LocalDate fechaDeIngreso, LocalDate fechaDeSalida) {
+    private Reserva crearReserva(Inquilino inquilino, Propiedad propiedad, LocalDate fechaDeIngreso, LocalDate fechaDeSalida) {
         Reserva newReserva = new Reserva(inquilino, propiedad, fechaDeIngreso, fechaDeSalida); // aun no fue aceptada por propietario
         return newReserva;
     }
@@ -87,6 +88,12 @@ public class Sitio {
 
     public List<Inquilino> getListaInquilinos() {
         return listaInquilinos;
+    }
+    public void ponerPropiedadEnAlquiler(Propiedad propiedad) {
+        listaPropiedades.add(propiedad);
+    }
+    public void registrarse(Inquilino inquilino) {
+        listaInquilinos.add(inquilino);
     }
 }
 
