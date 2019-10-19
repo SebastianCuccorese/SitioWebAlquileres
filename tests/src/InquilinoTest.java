@@ -38,4 +38,16 @@ class InquilinoTest {
         tomas.agendarReserva(new Reserva(tomas, casa, LocalDate.of(2009, 10, 23), LocalDate.of(2009, 10, 25)));
         Assertions.assertEquals(tomas.getTodasLasReservas().size(), 2);
     }
+    @Test
+    void getNombre(){
+        assertEquals(tomas.getNombre(), "Tomas");
+    }
+    @Test
+    void getTelefono(){
+        assertEquals(tomas.getTelefono(),30980092);
+    }
+    @Test
+    void Email(){
+        assertEquals(tomas.getMail(), "Tomas@Hotmail.com");
+    }
 }
