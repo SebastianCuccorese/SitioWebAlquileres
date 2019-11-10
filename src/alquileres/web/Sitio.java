@@ -104,7 +104,6 @@ public class Sitio {
         }
         return listaPropiedadesAdecuadas;
     }
-
     public List<Propiedad> getListaPropiedades() {
         return listaPropiedades;
     }

@@ -133,4 +133,12 @@ class SitioTest {
         sitio.crearPropiedad("Casa", "Mar del Plata", "Agua, Luz, Gas, Internet", 4, LocalTime.of(7, 20), LocalTime.of(22, 30), 5000, roberto);
         assertEquals(sitio.buscarPorFechaYCiudad(LocalDate.of(2019, 10, 10), LocalDate.of(2019, 11, 15), "Mar del Plata").size(), 2);
     }
+    @Test
+    void geterDeListaDeReservasAConfirmar() {
+        assertEquals(sitio.getListaDeReservasAConfirmar().size(), 1);
+    }
+    @Test
+    void geterDegetListaPropietarios() {
+        assertEquals(sitio.getListaPropietarios().size(), 2);
+    }
 }
