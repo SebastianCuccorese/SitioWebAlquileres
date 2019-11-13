@@ -38,7 +38,8 @@ class PropiedadTest {
 
     @org.junit.jupiter.api.Test
     void getCapacidad() {
-        Assertions.assertEquals(casa.getCapacidad(), 6);
+    	int capacidad = casa.getCapacidad();
+        Assertions.assertEquals(capacidad, 6);
     }
 
     @org.junit.jupiter.api.Test
@@ -53,7 +54,8 @@ class PropiedadTest {
 
     @org.junit.jupiter.api.Test
     void getPrecio() {
-        Assertions.assertEquals(casa.getPrecio(), 2000);
+    	int precio = casa.getPrecio();
+        Assertions.assertEquals(precio, 2000);
     }
 
     @org.junit.jupiter.api.Test

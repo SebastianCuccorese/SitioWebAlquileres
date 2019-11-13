@@ -44,7 +44,8 @@ class InquilinoTest {
     }
     @Test
     void getTelefono(){
-        assertEquals(tomas.getTelefono(),30980092);
+    	int telefono = tomas.getTelefono();
+        assertEquals(telefono,30980092);
     }
     @Test
     void Email(){
