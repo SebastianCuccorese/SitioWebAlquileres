@@ -12,6 +12,7 @@ import java.time.LocalTime;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 
+@SuppressWarnings("unused")
 class SitioTest {
     Sitio sitio;
     Inquilino tomas;
@@ -35,32 +36,37 @@ class SitioTest {
         sitio.registrarse(tomas);
         sitio.registrarse(pepito);
         casa = sitio.getListaPropiedades().get(0);
-        /*Creo reserva sin confirmar*/
         sitio.crearReserva(pepito, casa, LocalDate.of(2019,10,20), LocalDate.of(2019,10, 25));
-        /* Hardcodeo reserva ya confirmada para Pruebas*/
         reserva = new Reserva(tomas, casa, LocalDate.of(2019, 10, 10), LocalDate.of(2019, 10, 15));
         sitio.getListaDeReservasConfirmadas().add(reserva);
     }
     @Test
     void creoReservaSinConfirmarla() throws Exception {
-        //No hay disponibilidad
-        Assertions.assertThrows(java.lang.Exception.class,
+        roberto.aceptaReservas();
+    	Assertions.assertThrows(java.lang.Exception.class,
                 () -> sitio.crearReserva(tomas, casa ,LocalDate.of(2019, 10, 12), LocalDate.of(2019, 10, 14)));
     }
-
-    @Test()
+    @Test
+    void propietarioNoAceptaReserva() throws Exception {
+    	roberto.noAceptaReservas();
+    	Assertions.assertFalse(roberto.getAceptacion());
+    	int cant = sitio.getListaDeReservasAConfirmar().size();
+    	Assertions.assertThrows(java.lang.Exception.class,
+                () ->  sitio.aceptarYCrearReserva(sitio.getListaDeReservasAConfirmar().get(cant - 1)), "Su reserva ha sido rechazada");
+    }
+    @Test
     void CreoReservaConDisponibilidad() throws Exception {
         int cant = sitio.getListaDeReservasAConfirmar().size();
         sitio.crearReserva(tomas, casa ,LocalDate.of(2019, 11, 12), LocalDate.of(2019, 11, 14));
         assertEquals(sitio.getListaDeReservasAConfirmar().size(), cant + 1);
     }
-
-    @Test()
+    @Test
     void confirmarReserva() throws Exception {
         int cant = sitio.getListaDeReservasAConfirmar().size();
         sitio.crearReserva(tomas, casa ,LocalDate.of(2019, 11, 12), LocalDate.of(2019, 11, 14));
         assertEquals(sitio.getListaDeReservasAConfirmar().size(), cant + 1);
         int cantConfirmadas = sitio.getListaDeReservasConfirmadas().size();
+        roberto.aceptaReservas();
         sitio.aceptarYCrearReserva(sitio.getListaDeReservasAConfirmar().get(cant - 1));
         assertEquals(sitio.getListaDeReservasConfirmadas().size(), cantConfirmadas + 1);
     }
@@ -68,16 +74,12 @@ class SitioTest {
     void getListaPropiedades() {
         assertEquals(sitio.getListaPropiedades().size(), 2);
     }
-
     @Test
     void getListaDeReservasConfirmadas() {
-
         assertEquals(sitio.getListaDeReservasConfirmadas().size(), 1);
     }
-
     @Test
     void getListaDeReservasAConfirmar() {
-
         assertEquals(sitio.getListaDeReservasConfirmadas().size(), 1);
     }
     @Test
@@ -87,7 +89,6 @@ class SitioTest {
         sitio.registrarse(seba);
         assertEquals(sitio.getListaPropietarios().size(), cant + 1);
     }
-
     @Test
     void setInquilino() {
         int cant = sitio.getListaInquilinos().size();
@@ -140,5 +141,13 @@ class SitioTest {
     @Test
     void geterDegetListaPropietarios() {
         assertEquals(sitio.getListaPropietarios().size(), 2);
+    }
+    @Test
+    void noHayDisponibilidadPorTenerReservaConfirmada() {
+        assertFalse(sitio.hayDisponibilidad(casa, LocalDate.of(2019, 10, 10), LocalDate.of(2019, 10, 15)));
+    }
+    @Test
+    void noHayDisponibilidadPorTenerLaFechaDeIngresoNoEsPosterior() {
+        assertFalse(sitio.hayDisponibilidad(casa, LocalDate.of(2019, 10, 14), LocalDate.of(2019, 10, 19)));
     }
 }

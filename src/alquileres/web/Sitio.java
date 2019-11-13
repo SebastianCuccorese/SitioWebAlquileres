@@ -22,7 +22,7 @@ public class Sitio {
         }
     }
 
-    private boolean hayDisponibilidad(Propiedad propiedad, LocalDate fechaDeIngreso, LocalDate fechaDeSalida){
+    public boolean hayDisponibilidad(Propiedad propiedad, LocalDate fechaDeIngreso, LocalDate fechaDeSalida){
         return !this.existeReservaDePropiedad(propiedad) || this.getListaDeReservasConfirmadas().stream().anyMatch(reserva -> reserva.getPropiedad() == propiedad &&(
                 reserva.getFechaDeIngreso().isAfter(fechaDeSalida) || reserva.getFechaDeSalida().isBefore(fechaDeIngreso)));
     }
