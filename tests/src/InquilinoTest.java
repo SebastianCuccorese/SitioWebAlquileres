@@ -1,6 +1,4 @@
-import alquileres.web.Inquilino;
 import alquileres.web.Propiedad;
-import alquileres.web.Propietario;
 import alquileres.web.Reserva;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

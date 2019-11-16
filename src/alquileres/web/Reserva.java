@@ -3,13 +3,13 @@ package alquileres.web;
 import java.time.LocalDate;
 
 public class Reserva {
-    private Inquilino inquilino;
+    private Usuario inquilino;
     private Propiedad propiedad;
     private boolean aceptada = false;
     private LocalDate fechaDeIngreso;
     private LocalDate fechaDeSalida;
 
-    public Reserva(Inquilino inquilino, Propiedad propiedad, LocalDate ingreso, LocalDate salida){
+    public Reserva(Usuario inquilino, Propiedad propiedad, LocalDate ingreso, LocalDate salida){
         this.setInquilino(inquilino);
         this.setPropiedad(propiedad);
         this.setFechaDeIngreso(ingreso);
@@ -32,11 +32,11 @@ public class Reserva {
         return fechaDeSalida;
     }
 
-    public Inquilino getInquilino() {
+    public Usuario getInquilino() {
         return inquilino;
     }
 
-    private void setInquilino(Inquilino inquilino) {
+    private void setInquilino(Usuario inquilino) {
         this.inquilino = inquilino;
     }
 

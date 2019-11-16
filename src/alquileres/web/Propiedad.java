@@ -10,9 +10,9 @@ public class Propiedad {
     private LocalTime horarioEntrada;
     private LocalTime horarioSalida;
     private Integer precio;
-    private Propietario propietario;
+    private Usuario propietario;
 
-    public Propiedad(String tipo, String ciudad, String servicios, Integer capacidad, LocalTime horarioEntrada, LocalTime horarioSalida, Integer precio, Propietario propietario) {
+    public Propiedad(String tipo, String ciudad, String servicios, Integer capacidad, LocalTime horarioEntrada, LocalTime horarioSalida, Integer precio, Usuario propietario) {
         this.tipo = tipo;
         this.ciudad = ciudad;
         this.servicios = servicios;
@@ -51,7 +51,7 @@ public class Propiedad {
         return precio;
     }
 
-    public Propietario getPropietario() {
+    public Usuario getPropietario() {
         return propietario;
     }
 }

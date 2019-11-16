@@ -1,14 +1,10 @@
-import alquileres.web.Inquilino;
 import alquileres.web.Propiedad;
-import alquileres.web.Propietario;
 import alquileres.web.Reserva;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class ReservaTest {
     Inquilino tomas;
