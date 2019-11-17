@@ -6,8 +6,4 @@ public class Servicio {
     public Servicio(String tipo) {
         this.tipo = tipo;
     }
-
-    public String getTipo() {
-        return tipo;
-    }
 }

@@ -167,4 +167,9 @@ class SitioTest {
         administrador.crearServicio("Calefaccion");
         assertEquals(sitio.getListaDeServicios().size(), 5);
     }
+    @Test
+    void aceptarReservas() {
+        roberto.aceptaReservas();
+        assertTrue(roberto.getAceptacion());
+    }
 }
