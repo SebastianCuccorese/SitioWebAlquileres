@@ -11,27 +11,27 @@ public class Sitio {
     private List<Propiedad> listaPropiedades = new ArrayList<>();
     private List<Usuario>  listaUsuarios = new ArrayList<>();
     private List<Reserva> listaDeReservas = new ArrayList<>();
+    public List<Servicio> listaDeServicios = new ArrayList<>();
+
+    public List<Servicio> getListaDeServicios(){
+        return listaDeServicios;
+    }
+
 
     public boolean hayDisponibilidad(Propiedad propiedad, LocalDate fechaDeIngreso, LocalDate fechaDeSalida){
-        return !this.existeReservaDePropiedad(propiedad) || this.hayDisponibilidadAntesDeEstaFecha(propiedad, fechaDeSalida)
-                        || this.hayDisponibilidadDespuesDeEstaFecha(propiedad, fechaDeIngreso);
+        return !this.existeReservaDePropiedad(propiedad) || this.getListaDeReservas().stream().anyMatch(reserva -> reserva.getPropiedad() == propiedad &&(
+                reserva.getFechaDeIngreso().isAfter(fechaDeSalida) || reserva.getFechaDeSalida().isBefore(fechaDeIngreso)));
     }
-
-    public boolean hayDisponibilidadDespuesDeEstaFecha(Propiedad propiedad, LocalDate fechaDeSalida) {
-        return this.getListaDeReservas().stream().anyMatch(reserva -> reserva.getPropiedad() == propiedad &&(
-                reserva.getFechaDeIngreso().isAfter(fechaDeSalida)));
-    }
-    public boolean hayDisponibilidadAntesDeEstaFecha(Propiedad propiedad, LocalDate fechaDeIngreso) {
-        return this.getListaDeReservas().stream().anyMatch(reserva -> reserva.getPropiedad() == propiedad &&(
-                reserva.getFechaDeIngreso().isBefore(fechaDeIngreso)));
-    }
-
     private boolean existeReservaDePropiedad(Propiedad unaPropiedad) {
         return this.getListaDeReservas().stream().anyMatch(r-> r.getPropiedad().equals(unaPropiedad));
     }
 
-    public void crearPropiedad(Propiedad propiedad) {
+    public void crearPropiedad(Propiedad propiedad) throws Exception {
+        if(listaUsuarios.contains(propiedad.getPropietario())) {
             this.listaPropiedades.add(propiedad);
+        }else{
+            throw new Exception("El Propietario no se encuentra registrado");
+        }
     }
 
     public void aceptarYCrearReserva(Reserva reserva) throws Exception {
@@ -65,6 +65,9 @@ public class Sitio {
 
     public void registrarse(Usuario user){
         listaUsuarios.add(user);
+    }
+    public void agregarServicio(Servicio serv){
+        listaDeServicios.add(serv);
     }
 }
 

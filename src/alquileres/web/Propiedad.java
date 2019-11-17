@@ -1,18 +1,19 @@
 package alquileres.web;
 
 import java.time.LocalTime;
+import java.util.List;
 
 public class Propiedad {
     private String tipo;
     private String ciudad;
-    private String servicios;
+    private List<Servicio> servicios;
     private Integer capacidad;
     private LocalTime horarioEntrada;
     private LocalTime horarioSalida;
     private Integer precio;
     private Usuario propietario;
 
-    public Propiedad(String tipo, String ciudad, String servicios, Integer capacidad, LocalTime horarioEntrada, LocalTime horarioSalida, Integer precio, Usuario propietario) {
+    public Propiedad(String tipo, String ciudad, List<Servicio> servicios, Integer capacidad, LocalTime horarioEntrada, LocalTime horarioSalida, Integer precio, Usuario propietario) {
         this.tipo = tipo;
         this.ciudad = ciudad;
         this.servicios = servicios;
@@ -31,7 +32,7 @@ public class Propiedad {
         return ciudad;
     }
 
-    public String getServicios() {
+    public List<Servicio> getServicios() {
         return servicios;
     }
 

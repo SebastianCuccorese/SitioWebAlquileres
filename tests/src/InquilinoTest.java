@@ -1,5 +1,6 @@
 import alquileres.web.Propiedad;
 import alquileres.web.Reserva;
+import alquileres.web.Servicio;
 import alquileres.web.Usuario;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -8,6 +9,8 @@ import org.mockito.Mockito;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
@@ -17,11 +20,30 @@ class InquilinoTest {
     Usuario juan;
     Propiedad depto;
     Propiedad casa;
+    Servicio agua;
+    Servicio luz;
+    Servicio gas;
+    Servicio internet;
+    List<Servicio> servicios1;
+    List<Servicio> servicios2;
     @BeforeEach
     void setUp() {
+        agua = new Servicio("Agua");
+        luz = new Servicio("Luz");
+        internet = new Servicio("Internet");
+        gas = new Servicio("Gas");
+        servicios1 = new ArrayList<>();
+        servicios1.add(agua);
+        servicios1.add(luz);
+        servicios1.add(internet);
+        servicios1.add(gas);
+        servicios2 = new ArrayList<>();
+        servicios2.add(agua);
+        servicios2.add(luz);
+        servicios2.add(gas);
         tomas = new Usuario("Tomas", "Tomas@Hotmail.com", 30980092);
         juan = Mockito.mock(Usuario.class);
-        depto =new Propiedad("Departamento", "Mar del Plata", "Agua, Luz, Gas, Internet", 2, LocalTime.of(7,20), LocalTime.of(22,30), 500, juan);
+        depto =new Propiedad("Departamento", "Mar del Plata", servicios1, 2, LocalTime.of(7,20), LocalTime.of(22,30), 500, juan);
         casa = Mockito.mock(Propiedad.class);
     }
 

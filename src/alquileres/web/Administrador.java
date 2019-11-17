@@ -8,6 +8,11 @@ public class Administrador {
     private Usuario usuario;
     private Sitio sitio;
 
+    public Administrador(Usuario admin, Sitio sitio) {
+        this.usuario = admin;
+        this.sitio = sitio;
+    }
+
     public List<Propiedad> BuscarPropiedad(LocalDate entrada, LocalDate salida, String ciudad){
         List<Propiedad>  listaPropiedadesAdecuadas = new ArrayList<>();
 
@@ -19,6 +24,9 @@ public class Administrador {
         return listaPropiedadesAdecuadas;
     }
     public void crearServicio(String servicio) {
-        this.sitio.listaServicios.add(new Servicio(servicio));
+        this.sitio.agregarServicio(new Servicio(servicio));
+    }
+    public void agregarServicio(Servicio serv) {
+        sitio.agregarServicio(serv);
     }
 }
