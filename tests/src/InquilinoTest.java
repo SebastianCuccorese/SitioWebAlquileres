@@ -1,5 +1,6 @@
 import alquileres.web.Propiedad;
 import alquileres.web.Reserva;
+import alquileres.web.Usuario;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,14 +13,14 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 
 class InquilinoTest {
-    Inquilino tomas;
-    Propietario juan;
+    Usuario tomas;
+    Usuario juan;
     Propiedad depto;
     Propiedad casa;
     @BeforeEach
     void setUp() {
-        tomas = new Inquilino("Tomas", "Tomas@Hotmail.com", 30980092);
-        juan = Mockito.mock(Propietario.class);
+        tomas = new Usuario("Tomas", "Tomas@Hotmail.com", 30980092);
+        juan = Mockito.mock(Usuario.class);
         depto =new Propiedad("Departamento", "Mar del Plata", "Agua, Luz, Gas, Internet", 2, LocalTime.of(7,20), LocalTime.of(22,30), 500, juan);
         casa = Mockito.mock(Propiedad.class);
     }
