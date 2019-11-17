@@ -29,7 +29,4 @@ public class Administrador {
     public void agregarServicio(Servicio serv) {
         sitio.agregarServicio(serv);
     }
-    public void informarReservaAceptada(Usuario user, Reserva reserva) throws Exception {
-
-    }
 }
