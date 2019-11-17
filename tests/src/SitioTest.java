@@ -15,30 +15,36 @@ import static org.mockito.Mockito.mock;
 @SuppressWarnings("unused")
 class SitioTest {
     Sitio sitio;
-    Inquilino tomas;
-    Propietario juan;
+    Usuario tomas;
+    Usuario juan;
     Propiedad depto;
     Propiedad casa;
-    Propietario roberto;
+    Usuario roberto;
     Reserva reserva;
-    Inquilino pepito;
+    Usuario pepito;
+    Usuario admin;
+    Administrador administrador;
     @BeforeEach
     void setUp() throws Exception {
         sitio = new Sitio();
-        pepito = mock(Inquilino.class);
-        tomas = new Inquilino("Tomas", "Tomas@Hotmail.com", 30980092);
-        juan = new Propietario("juan", "Juan@outlook.com", 312231);
-        roberto = new Propietario("Roberto", "Roberto@Outlook.com", 4450012);
+        pepito = mock(Usuario.class);
+        tomas = new Usuario("Tomas", "Tomas@Hotmail.com", 30980092);
+        juan = new Usuario("juan", "Juan@outlook.com", 312231);
+        roberto = new Usuario("Roberto", "Roberto@Outlook.com", 4450012);
         sitio.registrarse(roberto);
         sitio.registrarse(juan);
-        sitio.crearPropiedad("Casa", "Ciudad del Cabo", "Agua, Luz, Gas, Internet", 6, LocalTime.of(7,20), LocalTime.of(22,30), 2000, roberto);
-        sitio.crearPropiedad("Departamento", "Mar del Plata", "Agua, Luz, Gas, Internet", 2, LocalTime.of(7,20), LocalTime.of(22,30), 500, juan);
+        casa = new Propiedad("Casa", "Ciudad del Cabo", "Agua, Luz, Gas, Internet", 6, LocalTime.of(7,20), LocalTime.of(22,30), 2000, roberto);
+        depto = new Propiedad("Departamento", "Mar del Plata", "Agua, Luz, Gas, Internet", 2, LocalTime.of(7,20), LocalTime.of(22,30), 500, juan);
+        sitio.crearPropiedad(casa);
+        sitio.crearPropiedad(depto);
         sitio.registrarse(tomas);
         sitio.registrarse(pepito);
         casa = sitio.getListaPropiedades().get(0);
         sitio.crearReserva(pepito, casa, LocalDate.of(2019,10,20), LocalDate.of(2019,10, 25));
         reserva = new Reserva(tomas, casa, LocalDate.of(2019, 10, 10), LocalDate.of(2019, 10, 15));
-        sitio.getListaDeReservasConfirmadas().add(reserva);
+        sitio.getListaDeReservas().add(reserva);
+        admin = new Usuario("admin", "Juan@outlook.com", 312231);
+        administrador = new Administrador(admin, sitio);
     }
     @Test
     void creoReservaSinConfirmarla() throws Exception {
@@ -50,25 +56,25 @@ class SitioTest {
     void propietarioNoAceptaReserva() throws Exception {
     	roberto.noAceptaReservas();
     	Assertions.assertFalse(roberto.getAceptacion());
-    	int cant = sitio.getListaDeReservasAConfirmar().size();
+    	int cant = sitio.getListaDeReservas().size();
     	Assertions.assertThrows(java.lang.Exception.class,
-                () ->  sitio.aceptarYCrearReserva(sitio.getListaDeReservasAConfirmar().get(cant - 1)), "Su reserva ha sido rechazada");
+                () ->  sitio.aceptarYCrearReserva(sitio.getListaDeReservas().get(cant - 1)), "Su reserva ha sido rechazada");
     }
     @Test
     void CreoReservaConDisponibilidad() throws Exception {
-        int cant = sitio.getListaDeReservasAConfirmar().size();
+        int cant = sitio.getListaDeReservas().size();
         sitio.crearReserva(tomas, casa ,LocalDate.of(2019, 11, 12), LocalDate.of(2019, 11, 14));
-        assertEquals(sitio.getListaDeReservasAConfirmar().size(), cant + 1);
+        assertEquals(sitio.getListaDeReservas().size(), cant + 1);
     }
     @Test
     void confirmarReserva() throws Exception {
-        int cant = sitio.getListaDeReservasAConfirmar().size();
+        int cant = sitio.getListaDeReservas().size();
         sitio.crearReserva(tomas, casa ,LocalDate.of(2019, 11, 12), LocalDate.of(2019, 11, 14));
-        assertEquals(sitio.getListaDeReservasAConfirmar().size(), cant + 1);
-        int cantConfirmadas = sitio.getListaDeReservasConfirmadas().size();
+        assertEquals(sitio.getListaDeReservas().size(), cant + 1);
+        int cantConfirmadas = sitio.getListaDeReservas().size();
         roberto.aceptaReservas();
-        sitio.aceptarYCrearReserva(sitio.getListaDeReservasAConfirmar().get(cant - 1));
-        assertEquals(sitio.getListaDeReservasConfirmadas().size(), cantConfirmadas + 1);
+        sitio.aceptarYCrearReserva(sitio.getListaDeReservas().get(cant - 1));
+        assertEquals(sitio.getListaDeReservas().size(), cantConfirmadas + 1);
     }
     @Test
     void getListaPropiedades() {
@@ -76,71 +82,72 @@ class SitioTest {
     }
     @Test
     void getListaDeReservasConfirmadas() {
-        assertEquals(sitio.getListaDeReservasConfirmadas().size(), 1);
+        assertEquals(sitio.getListaDeReservas().size(), 1);
     }
     @Test
     void getListaDeReservasAConfirmar() {
-        assertEquals(sitio.getListaDeReservasConfirmadas().size(), 1);
+        assertEquals(sitio.getListaDeReservas().size(), 1);
     }
     @Test
     void setPropietario() {
-        int cant = sitio.getListaPropietarios().size();
-        Propietario seba = mock(Propietario.class);
+        int cant = sitio.getListaUsuarios().size();
+        Usuario seba = mock(Usuario.class);
         sitio.registrarse(seba);
-        assertEquals(sitio.getListaPropietarios().size(), cant + 1);
+        assertEquals(sitio.getListaUsuarios().size(), cant + 1);
     }
     @Test
     void setInquilino() {
-        int cant = sitio.getListaInquilinos().size();
-        Inquilino pepe = mock(Inquilino.class);
+        int cant = sitio.getListaUsuarios().size();
+        Usuario pepe = mock(Usuario.class);
         sitio.registrarse(pepe);
-        assertEquals(sitio.getListaInquilinos().size(), cant + 1);
+        assertEquals(sitio.getListaUsuarios().size(), cant + 1);
     }
-    @Test
-    void getListaInquilinos() {
-        assertEquals(sitio.getListaInquilinos().size(), 2);
-    }
-
     @Test
     void crearPropiedadCorrectamente() throws Exception {
         int cantProp = sitio.getListaPropiedades().size();
-        sitio.crearPropiedad("Casa", "Quilmes", "Agua, Luz, Gas, Internet", 4, LocalTime.of(7,20), LocalTime.of(22,30), 5000, roberto);
+        Propiedad casa2 = new Propiedad("Casa", "Quilmes", "Agua, Luz, Gas, Internet", 4, LocalTime.of(7,20), LocalTime.of(22,30), 5000, roberto);
+        sitio.crearPropiedad(casa2);
         assertEquals(sitio.getListaPropiedades().size(), cantProp + 1);
     }
     @Test
     void falloCrearUnaPropiedadQueNoRegistraPropietario() throws Exception {
-        Propietario pedro = new Propietario("Pedro", "Pedro@Outlook.com", 11452445);
+        Usuario pedro = new Usuario("Pedro", "Pedro@Outlook.com", 11452445);
         int cantProp = sitio.getListaPropiedades().size();
+        Propiedad casa3 = new Propiedad("Casa", "Quilmes", "Agua, Luz, Gas, Internet", 4, LocalTime.of(7,20), LocalTime.of(22,30), 5000, pedro);
         Assertions.assertThrows(java.lang.Exception.class,
-                () -> sitio.crearPropiedad("Casa", "Quilmes", "Agua, Luz, Gas, Internet", 4, LocalTime.of(7,20), LocalTime.of(22,30), 5000, pedro));
+                () -> sitio.crearPropiedad(casa3));
     }
     @Test
     void busquedaDePropiedadesEnMarDelPlata() throws Exception {
-        sitio.crearPropiedad("Casa", "Mar del Plata", "Agua, Luz, Gas, Internet", 4, LocalTime.of(7, 20), LocalTime.of(22, 30), 5000, roberto);
-        assertEquals(sitio.buscarPorFechaYCiudad(LocalDate.of(2019, 11, 20), LocalDate.of(2019, 11, 25), "Mar del Plata").size(), 2);
+        Propiedad casa4 = new Propiedad("Casa", "Mar del Plata", "Agua, Luz, Gas, Internet", 4, LocalTime.of(7, 20), LocalTime.of(22, 30), 5000, roberto);
+        sitio.crearPropiedad(casa4);
+        assertEquals(administrador.BuscarPropiedad(LocalDate.of(2019, 11, 20), LocalDate.of(2019, 11, 25), "Mar del Plata").size(), 2);
     }
     @Test
     void busquedaDePropiedadesEnCiudadDelCabo() throws Exception {
-        sitio.crearPropiedad("Casa", "Mar del Plata", "Agua, Luz, Gas, Internet", 4, LocalTime.of(7, 20), LocalTime.of(22, 30), 5000, roberto);
-        assertEquals(sitio.buscarPorFechaYCiudad(LocalDate.of(2019, 11, 20), LocalDate.of(2019, 11, 25), "Ciudad del Cabo").size(), 1);
+        Propiedad casaAux = new Propiedad("Casa", "Mar del Plata", "Agua, Luz, Gas, Internet", 4, LocalTime.of(7, 20), LocalTime.of(22, 30), 5000, roberto);
+        sitio.crearPropiedad(casaAux);
+        assertEquals(administrador.BuscarPropiedad(LocalDate.of(2019, 11, 20), LocalDate.of(2019, 11, 25), "Ciudad del Cabo").size(), 1);
     }
     @Test
     void busquedaDePropiedadesEnCDCParaOctubre() throws Exception {
-        sitio.crearPropiedad("Casa", "Mar del Plata", "Agua, Luz, Gas, Internet", 4, LocalTime.of(7, 20), LocalTime.of(22, 30), 5000, roberto);
-        assertEquals(sitio.buscarPorFechaYCiudad(LocalDate.of(2019, 10, 10), LocalDate.of(2019, 11, 15), "Ciudad del Cabo").size(), 0);
+        Propiedad casaAux = new Propiedad("Casa", "Mar del Plata", "Agua, Luz, Gas, Internet", 4, LocalTime.of(7, 20), LocalTime.of(22, 30), 5000, roberto);
+        sitio.crearPropiedad(casaAux);
+        assertEquals(administrador.BuscarPropiedad(LocalDate.of(2019, 10, 10), LocalDate.of(2019, 11, 15), "Ciudad del Cabo").size(), 0);
     }
     @Test
     void busquedaDePropiedadesEnMDQParaOctubre() throws Exception {
-        sitio.crearPropiedad("Casa", "Mar del Plata", "Agua, Luz, Gas, Internet", 4, LocalTime.of(7, 20), LocalTime.of(22, 30), 5000, roberto);
-        assertEquals(sitio.buscarPorFechaYCiudad(LocalDate.of(2019, 10, 10), LocalDate.of(2019, 11, 15), "Mar del Plata").size(), 2);
+        Propiedad casaAux = new Propiedad("Casa", "Mar del Plata", "Agua, Luz, Gas, Internet", 4, LocalTime.of(7, 20), LocalTime.of(22, 30), 5000, roberto);
+        sitio.crearPropiedad(casaAux);
+        assertEquals(administrador.BuscarPropiedad(LocalDate.of(2019, 10, 10), LocalDate.of(2019, 11, 15), "Mar del Plata").size(), 2);
     }
     @Test
-    void geterDeListaDeReservasAConfirmar() {
-        assertEquals(sitio.getListaDeReservasAConfirmar().size(), 1);
+    void geterDeListaDeReservas() {
+        assertEquals(sitio.getListaDeReservas().size(), 2);
     }
     @Test
-    void geterDegetListaPropietarios() {
-        assertEquals(sitio.getListaPropietarios().size(), 2);
+    void geterDegetListaUsuarios() {
+        assertEquals(sitio.getListaUsuarios().size(), 4);
     }
     @Test
     void noHayDisponibilidadPorTenerReservaConfirmada() {
