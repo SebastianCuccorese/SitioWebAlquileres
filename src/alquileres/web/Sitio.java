@@ -1,5 +1,7 @@
 package alquileres.web;
 
+import org.mockito.cglib.core.Local;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -11,12 +13,25 @@ public class Sitio {
     private List<Reserva> listaDeReservas = new ArrayList<>();
 
     public boolean hayDisponibilidad(Propiedad propiedad, LocalDate fechaDeIngreso, LocalDate fechaDeSalida){
-        return !this.existeReservaDePropiedad(propiedad) || this.getListaDeReservasConfirmadas().stream().anyMatch(reserva -> reserva.getPropiedad() == propiedad &&(
-                reserva.getFechaDeIngreso().isAfter(fechaDeSalida) || reserva.getFechaDeSalida().isBefore(fechaDeIngreso)));
+        return !this.existeReservaDePropiedad(propiedad) || this.hayDisponibilidadAntesDeEstaFecha(propiedad, fechaDeSalida)
+                        || this.hayDisponibilidadDespuesDeEstaFecha(propiedad, fechaDeIngreso);
+    }
+
+    public boolean hayDisponibilidadDespuesDeEstaFecha(Propiedad propiedad, LocalDate fechaDeSalida) {
+        return this.getListaDeReservas().stream().anyMatch(reserva -> reserva.getPropiedad() == propiedad &&(
+                reserva.getFechaDeIngreso().isAfter(fechaDeSalida)));
+    }
+    public boolean hayDisponibilidadAntesDeEstaFecha(Propiedad propiedad, LocalDate fechaDeIngreso) {
+        return this.getListaDeReservas().stream().anyMatch(reserva -> reserva.getPropiedad() == propiedad &&(
+                reserva.getFechaDeIngreso().isBefore(fechaDeIngreso)));
     }
 
     private boolean existeReservaDePropiedad(Propiedad unaPropiedad) {
-        return this.getListaDeReservasConfirmadas().stream().anyMatch(r-> r.getPropiedad().equals(unaPropiedad));
+        return this.getListaDeReservas().stream().anyMatch(r-> r.getPropiedad().equals(unaPropiedad));
+    }
+
+    public void crearPropiedad(Propiedad propiedad) {
+            this.listaPropiedades.add(propiedad);
     }
 
     public void aceptarYCrearReserva(Reserva reserva) throws Exception {
@@ -39,13 +54,10 @@ public class Sitio {
         return listaPropiedades;
     }
 
-    public List<Reserva> getListaDeReservasConfirmadas() {
+    public List<Reserva> getListaDeReservas() {
         return listaDeReservas;
     }
 
-    public List<Reserva> getListaDeReservasAConfirmar() {
-        return listaDeReservas;
-    }
 
     public List<Usuario> getListaUsuarios(){
         return listaUsuarios;
