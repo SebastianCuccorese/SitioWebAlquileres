@@ -18,4 +18,7 @@ public class Administrador {
         }
         return listaPropiedadesAdecuadas;
     }
+    public void crearServicio(String servicio) {
+        this.sitio.listaServicios.add(new Servicio(servicio));
+    }
 }
