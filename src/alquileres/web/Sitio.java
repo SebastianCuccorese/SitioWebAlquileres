@@ -7,6 +7,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class Sitio {
     private List<Propiedad> listaPropiedades = new ArrayList<>();
     private List<Usuario>  listaUsuarios = new ArrayList<>();
@@ -34,13 +35,19 @@ public class Sitio {
         }
     }
 
-    public void aceptarYCrearReserva(Reserva reserva) throws Exception {
-            if (reserva.getPropiedad().getPropietario().aceptarReserva(reserva)) {
+    public void confirmarReserva(Reserva reserva) throws Exception {
+            Usuario propietario = reserva.getPropiedad().getPropietario();
+            if (propietario.aceptarReserva(reserva)) {
                 reserva.aceptar();
             }
             else {
                     throw new Exception("Su reserva ha sido rechazada");
             }
+    }
+    public void informarAvisoDeConfirmacion(Reserva reserva){
+        Usuario inquilino = reserva.getInquilino();
+        inquilino.agendarReserva(reserva);
+        //Codificacion para enviar mail.
     }
     public void crearReserva(Usuario inquilino, Propiedad propiedad, LocalDate fechaDeIngreso, LocalDate fechaDeSalida) throws Exception {
         Reserva newReserva = new Reserva(inquilino, propiedad, fechaDeIngreso, fechaDeSalida); // aun no fue aceptada por propietario

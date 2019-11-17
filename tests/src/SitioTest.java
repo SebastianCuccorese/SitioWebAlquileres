@@ -77,7 +77,7 @@ class SitioTest {
     	Assertions.assertFalse(roberto.getAceptacion());
     	int cant = sitio.getListaDeReservas().size();
     	Assertions.assertThrows(java.lang.Exception.class,
-                () ->  sitio.aceptarYCrearReserva(sitio.getListaDeReservas().get(cant - 1)), "Su reserva ha sido rechazada");
+                () ->  sitio.confirmarReserva(sitio.getListaDeReservas().get(cant - 1)), "Su reserva ha sido rechazada");
     }
     @Test
     void CreoReservaConDisponibilidad() throws Exception {
@@ -168,8 +168,18 @@ class SitioTest {
         assertEquals(sitio.getListaDeServicios().size(), 5);
     }
     @Test
-    void aceptarReservas() {
+    void aceptarReserva() throws Exception {
         roberto.aceptaReservas();
-        assertTrue(roberto.getAceptacion());
+        Reserva laReserva = new Reserva(tomas, casa, LocalDate.of(2019, 12, 10), LocalDate.of(2019, 12, 15));
+        sitio.getListaDeReservas().add(laReserva);
+        sitio.confirmarReserva(laReserva);
+        sitio.informarAvisoDeConfirmacion(laReserva);
+    }
+    @Test
+    void NoConfirmoReserva() throws Exception {
+        Reserva laReserva = new Reserva(tomas, casa, LocalDate.of(2019, 12, 10), LocalDate.of(2019, 12, 15));
+        sitio.getListaDeReservas().add(laReserva);
+        Assertions.assertThrows(java.lang.Exception.class,
+                () -> sitio.confirmarReserva(laReserva), "Su reserva ha sido rechazada");
     }
 }
