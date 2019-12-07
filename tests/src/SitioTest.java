@@ -2,8 +2,7 @@ import alquileres.web.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
-import org.mockito.cglib.core.Local;
+
 
 import java.security.InvalidParameterException;
 import java.time.LocalDate;
@@ -13,6 +12,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
+
 
 @SuppressWarnings("unused")
 class SitioTest {
@@ -58,12 +58,13 @@ class SitioTest {
         sitio.registrarse(juan);
         casa = new Propiedad("Casa", "Ciudad del Cabo", servicios1, 6, LocalTime.of(7,20), LocalTime.of(22,30), 2000, roberto);
         depto = new Propiedad("Departamento", "Mar del Plata", servicios2, 2, LocalTime.of(7,20), LocalTime.of(22,30), 500, juan);
-        sitio.crearPropiedad(casa);
-        sitio.crearPropiedad(depto);
+        sitio.addPropiedad(casa);
+        sitio.addPropiedad(depto);
         sitio.registrarse(tomas);
         sitio.registrarse(pepito);
         casa = sitio.getListaPropiedades().get(0);
-        sitio.crearReserva(pepito, casa, LocalDate.of(2019,10,20), LocalDate.of(2019,10, 25));
+        Reserva reserva1 = new Reserva(pepito, casa, LocalDate.of(2019,10,20), LocalDate.of(2019,10, 25));
+        sitio.addReserva(reserva1);
         reserva = new Reserva(tomas, casa, LocalDate.of(2019, 10, 10), LocalDate.of(2019, 10, 15));
         sitio.getListaDeReservas().add(reserva);
         administrador.agregarServicio(agua);
@@ -71,20 +72,7 @@ class SitioTest {
         administrador.agregarServicio(gas);
         administrador.agregarServicio(luz);
     }
-    @Test
-    void propietarioNoAceptaReserva() throws Exception {
-    	roberto.noAceptaReservas();
-    	Assertions.assertFalse(roberto.getAceptacion());
-    	int cant = sitio.getListaDeReservas().size();
-    	Assertions.assertThrows(java.lang.Exception.class,
-                () ->  sitio.confirmarReserva(sitio.getListaDeReservas().get(cant - 1)), "Su reserva ha sido rechazada");
-    }
-    @Test
-    void CreoReservaConDisponibilidad() throws Exception {
-        int cant = sitio.getListaDeReservas().size();
-        sitio.crearReserva(tomas, casa ,LocalDate.of(2019, 11, 12), LocalDate.of(2019, 11, 14));
-        assertEquals(sitio.getListaDeReservas().size(), cant + 1);
-    }
+
     @Test
     void getListaPropiedades() {
         assertEquals(sitio.getListaPropiedades().size(), 2);
@@ -111,7 +99,7 @@ class SitioTest {
     void crearPropiedadCorrectamente() throws Exception {
         int cantProp = sitio.getListaPropiedades().size();
         Propiedad casa2 = new Propiedad("Casa", "Quilmes", servicios1, 4, LocalTime.of(7,20), LocalTime.of(22,30), 5000, roberto);
-        sitio.crearPropiedad(casa2);
+        sitio.addPropiedad(casa2);
         assertEquals(sitio.getListaPropiedades().size(), cantProp + 1);
     }
     @Test
@@ -120,66 +108,59 @@ class SitioTest {
         int cantProp = sitio.getListaPropiedades().size();
         Propiedad casa3 = new Propiedad("Casa", "Quilmes", servicios1, 4, LocalTime.of(7,20), LocalTime.of(22,30), 5000, pedro);
         Assertions.assertThrows(java.lang.Exception.class,
-                () -> sitio.crearPropiedad(casa3), "El Propietario no se encuentra registrado");
+                () -> sitio.addPropiedad(casa3), "El Propietario no se encuentra registrado");
     }
     @Test
     void busquedaDePropiedadesEnMarDelPlata() throws Exception {
         Propiedad casa4 = new Propiedad("Casa", "Mar del Plata", servicios1, 4, LocalTime.of(7, 20), LocalTime.of(22, 30), 5000, roberto);
-        sitio.crearPropiedad(casa4);
+        sitio.addPropiedad(casa4);
         assertEquals(administrador.BuscarPropiedad(LocalDate.of(2019, 11, 20), LocalDate.of(2019, 11, 25), "Mar del Plata").size(), 2);
     }
     @Test
     void busquedaDePropiedadesEnCiudadDelCabo() throws Exception {
         Propiedad casaAux = new Propiedad("Casa", "Mar del Plata", servicios1, 4, LocalTime.of(7, 20), LocalTime.of(22, 30), 5000, roberto);
-        sitio.crearPropiedad(casaAux);
+        sitio.addPropiedad(casaAux);
         assertEquals(administrador.BuscarPropiedad(LocalDate.of(2019, 11, 20), LocalDate.of(2019, 11, 25), "Ciudad del Cabo").size(), 1);
     }
     @Test
     void busquedaDePropiedadesEnCDCParaOctubre() throws Exception {
         Propiedad casaAux = new Propiedad("Casa", "Mar del Plata", servicios1, 4, LocalTime.of(7, 20), LocalTime.of(22, 30), 5000, roberto);
-        sitio.crearPropiedad(casaAux);
+        sitio.addPropiedad(casaAux);
         assertEquals(administrador.BuscarPropiedad(LocalDate.of(2019, 10, 10), LocalDate.of(2019, 11, 15), "Ciudad del Cabo").size(), 0);
     }
     @Test
     void busquedaDePropiedadesEnMDQParaOctubre() throws Exception {
         Propiedad casaAux = new Propiedad("Casa", "Mar del Plata", servicios1, 4, LocalTime.of(7, 20), LocalTime.of(22, 30), 5000, roberto);
-        sitio.crearPropiedad(casaAux);
+        sitio.addPropiedad(casaAux);
         assertEquals(administrador.BuscarPropiedad(LocalDate.of(2019, 10, 10), LocalDate.of(2019, 11, 15), "Mar del Plata").size(), 2);
     }
     @Test
-    void geterDeListaDeReservas() {
+    void getterDeListaDeReservas() {
         assertEquals(sitio.getListaDeReservas().size(), 2);
     }
     @Test
-    void geterDegetListaUsuarios() {
+    void getterDeListaUsuarios() {
         assertEquals(sitio.getListaUsuarios().size(), 4);
     }
-    /*@Test
-    void hayDisponibilidadPorNoSolaparfechas() {
-        assertFalse(sitio.hayDisponibilidad(casa, LocalDate.of(2019, 10, 11), LocalDate.of(2019, 10, 14)));
-    }*/
+
     @Test
-    void hayDisponibilidadPorTenerLaFechaDeIngresoNoEsPosterior() {
+    void hayDisponibilidadPorTenerLaFechaDeIngresoPosterior() {
         assertTrue(sitio.hayDisponibilidad(casa, LocalDate.of(2019, 10, 14), LocalDate.of(2019, 10, 19)));
     }
+    @Test
+    void hayDisponibilidadPorTenerLaFechaDeIngresoPrevio(){
+        assertTrue(sitio.hayDisponibilidad(casa, LocalDate.of(2019, 10, 1), LocalDate.of(2019, 10, 9)));
+    }
+
+    @Test
+    void noHayDisponibilidadPorFechaOcupada(){
+        assertFalse(sitio.hayDisponibilidad(casa, LocalDate.of(2019, 10, 10), LocalDate.of(2019, 10, 14)));
+    }
+
     @Test
     void AdminAgregaServicios() {
         administrador.crearServicio("Calefaccion");
         assertEquals(sitio.getListaDeServicios().size(), 5);
     }
-    @Test
-    void aceptarReserva() throws Exception {
-        roberto.aceptaReservas();
-        Reserva laReserva = new Reserva(tomas, casa, LocalDate.of(2019, 12, 10), LocalDate.of(2019, 12, 15));
-        sitio.getListaDeReservas().add(laReserva);
-        sitio.confirmarReserva(laReserva);
-        sitio.informarAvisoDeConfirmacion(laReserva);
-    }
-    @Test
-    void NoConfirmoReserva() throws Exception {
-        Reserva laReserva = new Reserva(tomas, casa, LocalDate.of(2019, 12, 10), LocalDate.of(2019, 12, 15));
-        sitio.getListaDeReservas().add(laReserva);
-        Assertions.assertThrows(java.lang.Exception.class,
-                () -> sitio.confirmarReserva(laReserva), "Su reserva ha sido rechazada");
-    }
+
 }

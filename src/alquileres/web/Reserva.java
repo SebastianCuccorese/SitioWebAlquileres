@@ -16,6 +16,10 @@ public class Reserva {
         this.setFechaDeSalida(salida);
     }
 
+    public void aceptar() {
+        this.aceptada = true;
+    }
+
     private void setFechaDeSalida(LocalDate fechaDeSalida) {
         this.fechaDeSalida = fechaDeSalida;
     }
@@ -50,9 +54,5 @@ public class Reserva {
 
     public boolean isAceptada(){
         return aceptada;
-    }
-
-    public void aceptar() {
-        this.aceptada = true;
     }
 }
