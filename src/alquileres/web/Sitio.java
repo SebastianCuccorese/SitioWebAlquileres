@@ -1,9 +1,8 @@
 package alquileres.web;
 
-import org.mockito.cglib.core.Local;
+
 
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,43 +19,25 @@ public class Sitio {
 
 
     public boolean hayDisponibilidad(Propiedad propiedad, LocalDate fechaDeIngreso, LocalDate fechaDeSalida){
-        return !this.existeReservaDePropiedad(propiedad) || this.getListaDeReservas().stream().anyMatch(reserva -> reserva.getPropiedad() == propiedad &&(
-                reserva.getFechaDeIngreso().isAfter(fechaDeSalida) || reserva.getFechaDeSalida().isBefore(fechaDeIngreso)));
+        return !this.existeReservaDePropiedad(propiedad) || (this.getListaDeReservas().stream().anyMatch(reserva -> reserva.getPropiedad() == propiedad &&(
+                reserva.getFechaDeIngreso().isAfter(fechaDeSalida) || reserva.getFechaDeSalida().isBefore(fechaDeIngreso))));
     }
     private boolean existeReservaDePropiedad(Propiedad unaPropiedad) {
         return this.getListaDeReservas().stream().anyMatch(r-> r.getPropiedad().equals(unaPropiedad));
     }
 
-    public void crearPropiedad(Propiedad propiedad) throws Exception {
+    public void addPropiedad(Propiedad propiedad) throws WebSiteException {
         if(listaUsuarios.contains(propiedad.getPropietario())) {
             this.listaPropiedades.add(propiedad);
         }else{
-            throw new Exception("El Propietario no se encuentra registrado");
+            throw new WebSiteException(02);
         }
     }
 
-    public void confirmarReserva(Reserva reserva) throws Exception {
-            Usuario propietario = reserva.getPropiedad().getPropietario();
-            if (propietario.aceptarReserva(reserva)) {
-                reserva.aceptar();
-            }
-            else {
-                    throw new Exception("Su reserva ha sido rechazada");
-            }
+    public void addReserva(Reserva reserva){
+        this.listaDeReservas.add(reserva);
     }
-    public void informarAvisoDeConfirmacion(Reserva reserva){
-        Usuario inquilino = reserva.getInquilino();
-        inquilino.agendarReserva(reserva);
-        //Codificacion para enviar mail.
-    }
-    public void crearReserva(Usuario inquilino, Propiedad propiedad, LocalDate fechaDeIngreso, LocalDate fechaDeSalida) throws Exception {
-        Reserva newReserva = new Reserva(inquilino, propiedad, fechaDeIngreso, fechaDeSalida); // aun no fue aceptada por propietario
-        if (hayDisponibilidad(newReserva.getPropiedad(), newReserva.getFechaDeIngreso(), newReserva.getFechaDeSalida())){
-            listaDeReservas.add(newReserva);
-        }else{
-            throw new Exception("No hay disponibilidad para realizar la reserva");
-        }
-    }
+
     public List<Propiedad> getListaPropiedades() {
         return listaPropiedades;
     }

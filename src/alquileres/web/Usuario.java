@@ -1,24 +1,33 @@
 package alquileres.web;
 
-import java.util.ArrayList;
+import java.time.LocalDate;
 import java.util.List;
 
-public class Usuario {
+public class Usuario implements Inquilino, Propietario{
     private String nombre;
     private String mail;
     private Integer telefono;
-    private List<Reserva> todasLasReservas = new ArrayList<>(); //reservas concretadas
-    private boolean aceptaReserva;
+    private ServicioCorreo email;
+    private Sitio sitio;
 
     public Usuario(String nombre, String mail, Integer telefono) {
         this.nombre = nombre;
         this.mail = mail;
         this.telefono = telefono;
-        this.aceptaReserva = false;
     }
 
-    public void agendarReserva(Reserva reserva) {
-        todasLasReservas.add(reserva);
+    @Override
+    public void crearReserva(Propiedad propiedad, LocalDate fechaDeIngreso, LocalDate fechaDeSalida) throws WebSiteException {
+        Reserva newReserva = new Reserva(this, propiedad, fechaDeIngreso, fechaDeSalida);
+        if (sitio.hayDisponibilidad(newReserva.getPropiedad(), newReserva.getFechaDeIngreso(), newReserva.getFechaDeSalida())){
+            todasLasReservas.add(newReserva);
+        }else{
+            throw new WebSiteException(01);
+        }
+    }
+
+    public void addReserva(Reserva reserva) {
+        this.todasLasReservas.add(reserva);
     }
 
     public List<Reserva> getTodasLasReservas() {
@@ -37,17 +46,14 @@ public class Usuario {
         return telefono;
     }
 
-    public boolean aceptarReserva(Reserva reserva) { return aceptaReserva; }
-
-    public void aceptaReservas() {
-        aceptaReserva = true;
+    @Override
+    public void aceptarReserva(Reserva reserva) {
+        reserva.aceptar();
+        email.enviarMail(reserva.getInquilino(), "Su reserva fue aceptada");
     }
 
-    public void noAceptaReservas() {
-        aceptaReserva = false;
-    }
-
-    public boolean getAceptacion() {
-        return aceptaReserva;
+    @Override
+    public void rechazarRerva(Reserva reserva) {
+        email.enviarMail(reserva.getInquilino(), "Lamento informarle que su reserva fue rechazada");
     }
 }
