@@ -22,7 +22,7 @@ public class Usuario implements Inquilino, Propietario{
         if (sitio.hayDisponibilidad(newReserva.getPropiedad(), newReserva.getFechaDeIngreso(), newReserva.getFechaDeSalida())){
             todasLasReservas.add(newReserva);
         }else{
-            throw new WebSiteException(01);
+            throw new WebSiteException(1);
         }
     }
 

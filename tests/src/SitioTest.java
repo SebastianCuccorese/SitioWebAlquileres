@@ -165,5 +165,4 @@ class SitioTest {
         tomas.setSitio(sitio);
         Assertions.assertThrows(WebSiteException.class,()-> tomas.crearReserva(casa,LocalDate.of(2019,10,10) ,LocalDate.of(2019,10,14)),"No hay disponibilidad para realizar la reserva");
     }
-
 }

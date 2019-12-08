@@ -81,6 +81,13 @@ class UsuarioTest {
         assertTrue(reserva.isAceptada());
     }
     @Test
+    void rechazarReserva(){
+        Email m = Mockito.mock(Email.class);
+        tomas.setServicioCorredo(m);
+        tomas.rechazarReserva(reserva);
+        assertFalse(reserva.isAceptada());
+    }
+    @Test
     void getPropiedades(){
         assertEquals(0, tomas.getPropiedades().size());
     }
@@ -91,9 +98,7 @@ class UsuarioTest {
         assertEquals(s, tomas.getSitio());
     }
     @Test
-    void CrearReserva(){
-        Sitio s = Mockito.mock(Sitio.class);
-        tomas.setSitio(s);
-        assertEquals(s, tomas.getSitio());
+    void getReservas(){
+        assertEquals(3, tomas.getTodasLasReservas().size());
     }
 }
