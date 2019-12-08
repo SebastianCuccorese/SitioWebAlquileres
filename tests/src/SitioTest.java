@@ -143,7 +143,7 @@ class SitioTest {
 
     @Test
     void hayDisponibilidadPorTenerLaFechaDeIngresoPosterior() {
-        assertFalse(sitio.hayDisponibilidad(casa, LocalDate.of(2019, 10, 14), LocalDate.of(2019, 10, 19)));
+        assertTrue(sitio.hayDisponibilidad(casa, LocalDate.of(2019, 10, 16), LocalDate.of(2019, 10, 20)));
     }
     @Test
     void hayDisponibilidadPorTenerLaFechaDeIngresoPrevio(){
@@ -152,7 +152,7 @@ class SitioTest {
 
     @Test
     void noHayDisponibilidadPorFechaOcupada(){
-        assertFalse(sitio.hayDisponibilidad(casa, LocalDate.of(2019, 10, 10), LocalDate.of(2019, 10, 14)));
+        assertFalse(sitio.hayDisponibilidad(casa, LocalDate.of(2019, 10, 11), LocalDate.of(2019, 10, 15)));
     }
 
     @Test

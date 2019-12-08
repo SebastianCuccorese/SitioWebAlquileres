@@ -48,7 +48,7 @@ public class Usuario implements Inquilino, Propietario{
 
     public  List<Propiedad> getPropiedades(){return propiedades;}
 
-    public void setServicioCorredo(Email m){
+    public void setServicioCorredo(ServicioCorreo m){
         this.email = m;
     }
 
