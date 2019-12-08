@@ -19,11 +19,24 @@ public class Sitio {
 
 
     public boolean hayDisponibilidad(Propiedad propiedad, LocalDate fechaDeIngreso, LocalDate fechaDeSalida){
-        return !this.existeReservaDePropiedad(propiedad) || (this.getListaDeReservas().stream().anyMatch(reserva -> reserva.getPropiedad() == propiedad &&(
-                reserva.getFechaDeIngreso().isAfter(fechaDeSalida) || reserva.getFechaDeSalida().isBefore(fechaDeIngreso))));
+        return !this.seSolapanLasReservas(propiedad, fechaDeIngreso, fechaDeSalida);
     }
-    private boolean existeReservaDePropiedad(Propiedad unaPropiedad) {
-        return this.getListaDeReservas().stream().anyMatch(r-> r.getPropiedad().equals(unaPropiedad));
+    private  boolean seSolapanLasReservas(Propiedad p, LocalDate ingreso, LocalDate egreso){
+        LocalDate ingresoReserva;
+        LocalDate egresoReserva;
+        boolean solapamiento = false;
+        Propiedad prop;
+        for (Reserva reserva:listaDeReservas
+             ) {
+                prop = reserva.getPropiedad();
+                if(prop == p && !solapamiento){
+                    ingresoReserva = reserva.getFechaDeIngreso();
+                    egresoReserva = reserva.getFechaDeSalida();
+                    solapamiento = (ingreso.isAfter(ingresoReserva) && ingreso.isBefore(egresoReserva) ||
+                                    egreso.isAfter(ingresoReserva) && egreso.isBefore(egresoReserva));
+                }
+        }
+        return solapamiento;
     }
 
     public void addPropiedad(Propiedad propiedad) throws WebSiteException {

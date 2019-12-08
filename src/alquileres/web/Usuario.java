@@ -46,6 +46,20 @@ public class Usuario implements Inquilino, Propietario{
         return telefono;
     }
 
+    public  List<Propiedad> getPropiedades(){return propiedades;}
+
+    public void setServicioCorredo(Email m){
+        this.email = m;
+    }
+
+    public void setSitio(Sitio s){
+        this.sitio = s;
+    }
+
+    public Sitio getSitio(){
+        return this.sitio;
+    }
+
     @Override
     public void aceptarReserva(Reserva reserva) {
         reserva.aceptar();
@@ -53,7 +67,7 @@ public class Usuario implements Inquilino, Propietario{
     }
 
     @Override
-    public void rechazarRerva(Reserva reserva) {
+    public void rechazarReserva(Reserva reserva) {
         email.enviarMail(reserva.getInquilino(), "Lamento informarle que su reserva fue rechazada");
     }
 }

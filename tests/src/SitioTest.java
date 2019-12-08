@@ -3,8 +3,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-
-import java.security.InvalidParameterException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -126,7 +124,7 @@ class SitioTest {
     void busquedaDePropiedadesEnCDCParaOctubre() throws Exception {
         Propiedad casaAux = new Propiedad("Casa", "Mar del Plata", servicios1, 4, LocalTime.of(7, 20), LocalTime.of(22, 30), 5000, roberto);
         sitio.addPropiedad(casaAux);
-        assertEquals(administrador.BuscarPropiedad(LocalDate.of(2019, 10, 10), LocalDate.of(2019, 11, 15), "Ciudad del Cabo").size(), 0);
+        assertEquals(administrador.BuscarPropiedad(LocalDate.of(2019, 10, 10), LocalDate.of(2019, 11, 15), "Ciudad del Cabo").size(), 1);
     }
     @Test
     void busquedaDePropiedadesEnMDQParaOctubre() throws Exception {
@@ -145,7 +143,7 @@ class SitioTest {
 
     @Test
     void hayDisponibilidadPorTenerLaFechaDeIngresoPosterior() {
-        assertTrue(sitio.hayDisponibilidad(casa, LocalDate.of(2019, 10, 14), LocalDate.of(2019, 10, 19)));
+        assertFalse(sitio.hayDisponibilidad(casa, LocalDate.of(2019, 10, 14), LocalDate.of(2019, 10, 19)));
     }
     @Test
     void hayDisponibilidadPorTenerLaFechaDeIngresoPrevio(){
@@ -161,6 +159,11 @@ class SitioTest {
     void AdminAgregaServicios() {
         administrador.crearServicio("Calefaccion");
         assertEquals(sitio.getListaDeServicios().size(), 5);
+    }
+    @Test
+    void AgergoReservaSinPoder() throws WebSiteException{
+        tomas.setSitio(sitio);
+        Assertions.assertThrows(WebSiteException.class,()-> tomas.crearReserva(casa,LocalDate.of(2019,10,10) ,LocalDate.of(2019,10,14)),"No hay disponibilidad para realizar la reserva");
     }
 
 }

@@ -1,7 +1,4 @@
-import alquileres.web.Propiedad;
-import alquileres.web.Reserva;
-import alquileres.web.Servicio;
-import alquileres.web.Usuario;
+import alquileres.web.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
 
 class UsuarioTest {
     Usuario tomas;
@@ -26,6 +22,7 @@ class UsuarioTest {
     Servicio internet;
     List<Servicio> servicios1;
     List<Servicio> servicios2;
+    Reserva reserva;
     @BeforeEach
     void setUp() {
         agua = new Servicio("Agua");
@@ -45,13 +42,14 @@ class UsuarioTest {
         juan = Mockito.mock(Usuario.class);
         depto =new Propiedad("Departamento", "Mar del Plata", servicios1, 2, LocalTime.of(7,20), LocalTime.of(22,30), 500, juan);
         casa = Mockito.mock(Propiedad.class);
+        reserva = new Reserva(tomas, depto, LocalDate.of(2019, 10, 10), LocalDate.of(2019, 10, 15));
     }
 
     @Test
     void getTodasLasReservas() {
         tomas.addReserva(new Reserva(tomas, depto, LocalDate.of(2009, 10, 23), LocalDate.of(2009, 10, 25)));
         tomas.addReserva(new Reserva(tomas, casa, LocalDate.of(2009, 10, 23), LocalDate.of(2009, 10, 25)));
-        Assertions.assertEquals(tomas.getTodasLasReservas().size(), 2);
+        Assertions.assertEquals(tomas.getTodasLasReservas().size(), 3);
     }
 
     @Test
@@ -73,5 +71,29 @@ class UsuarioTest {
     @Test
     void Email(){
         assertEquals(tomas.getMail(), "Tomas@Hotmail.com");
+    }
+
+    @Test
+    void aceptarReserva(){
+        Email m = Mockito.mock(Email.class);
+        tomas.setServicioCorredo(m);
+        tomas.aceptarReserva(reserva);
+        assertTrue(reserva.isAceptada());
+    }
+    @Test
+    void getPropiedades(){
+        assertEquals(0, tomas.getPropiedades().size());
+    }
+    @Test
+    void usuarioSitios(){
+        Sitio s = Mockito.mock(Sitio.class);
+        tomas.setSitio(s);
+        assertEquals(s, tomas.getSitio());
+    }
+    @Test
+    void CrearReserva(){
+        Sitio s = Mockito.mock(Sitio.class);
+        tomas.setSitio(s);
+        assertEquals(s, tomas.getSitio());
     }
 }
